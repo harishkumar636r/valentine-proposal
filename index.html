@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Dharunya 🌹</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+
+/* BACKGROUND VIDEO */
+video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+/* SOFT OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,40,80,0.25);
+  display:none;
+}
+
+/* PAGES */
+.page{
+  position:absolute;
+  inset:0;
+  display:none;
+  color:white;
+  text-align:center;
+  padding-top:10vh;
+}
+.active{display:block;}
+
+h1{
+  font-size:3.2rem;
+  margin-bottom:15px;
+  letter-spacing:2px;
+}
+
+#name span{
+  opacity:0;
+  animation:reveal 0.5s forwards;
+}
+
+@keyframes reveal{
+  to{opacity:1;}
+}
+
+.date{
+  font-size:1.4rem;
+  margin-bottom:25px;
+  opacity:0;
+  animation:dateIn 2s forwards;
+}
+
+@keyframes dateIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+p{
+  font-size:1.55rem;
+  max-width:900px;
+  margin:auto;
+  line-height:1.9;
+}
+
+button{
+  margin-top:40px;
+  padding:16px 48px;
+  border:none;
+  border-radius:40px;
+  font-size:1.1rem;
+  cursor:pointer;
+  background:linear-gradient(45deg,#cfe9ff,#ffffff);
+  box-shadow:0 0 30px rgba(255,255,255,.9);
+}
+
+/* FLOATING ROSES */
+.rose{
+  position:fixed;
+  bottom:-30px;
+  font-size:20px;
+  animation:float 7s linear infinite;
+  opacity:.8;
+}
+@keyframes float{
+  0%{transform:translateY(0) scale(1);}
+  100%{transform:translateY(-120vh) scale(1.4);opacity:0;}
+}
+
+/* COUPLE */
+.couple{display:flex;justify-content:center;gap:120px;margin-top:40px;}
+.person{
+  width:130px;height:210px;border-radius:65px;
+  animation:sway 3s ease-in-out infinite;
+}
+.boy{background:linear-gradient(#6aaeff,#ffffff);}
+.girl{background:linear-gradient(#ffffff,#d6ebff);}
+
+@keyframes sway{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-18px);}
+}
+
+/* RING */
+.ring{
+  width:95px;height:95px;
+  border:6px solid gold;
+  border-radius:50%;
+  margin:35px auto;
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.25);}
+  100%{transform:scale(1);}
+}
+
+/* PHOTO */
+.photo{
+  width:230px;height:230px;border-radius:50%;
+  border:5px solid white;
+  margin:20px auto;
+  display:none;
+  animation:zoom 2s forwards;
+}
+@keyframes zoom{
+  from{transform:scale(0);}
+  to{transform:scale(1);}
+}
+
+/* FIREWORKS */
+.fireworks{
+  position:fixed;
+  inset:0;
+  background:url("https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif") center/cover;
+  display:none;
+  pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<video id="bg" loop playsinline>
+  <source src="background.mp4/ha24.mp4" type="video/mp4">
+</video>
+<div class="overlay" id="overlay"></div>
+<div class="fireworks" id="fireworks"></div>
+
+<audio id="music" loop>
+  <source src="music.mp3/Kannukulla BGM.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <h1 id="name"></h1>
+  <div class="date">February 14</div>
+  <p id="type1"></p>
+  <button onclick="start()">Are you ready to see my heart ✨</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <p>
+    I don’t want perfect moments.<br>
+    I want real ones — with you, every single day.
+  </p>
+  <button onclick="next(3)">Continue 🌹</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <div class="couple">
+    <div class="person boy"></div>
+    <div class="person girl"></div>
+  </div>
+  <div class="ring"></div>
+  <img src="couple.glb/download.jpg" class="photo" id="photo">
+  <button onclick="next(4)">This is my promise 💍</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+  <h1>Will you be my Valentine? 🌹</h1>
+  <button onclick="yes()">YES 💙</button>
+</div>
+
+<script>
+/* Name animation */
+const name="Dharunya";
+const nameBox=document.getElementById("name");
+[...name].forEach((l,i)=>{
+  const span=document.createElement("span");
+  span.textContent=l;
+  span.style.animationDelay=i*0.25+"s";
+  nameBox.appendChild(span);
+});
+
+/* Typing text – bold tone */
+const text="I’m not here to impress you. I’m here to choose you — clearly, confidently, and without hesitation.";
+let i=0;
+function type(){
+  if(i<text.length){
+    document.getElementById("type1").innerHTML+=text[i++];
+    setTimeout(type,50);
+  }
+}
+type();
+
+/* Start */
+function start(){
+  const v=document.getElementById("bg");
+  const m=document.getElementById("music");
+  v.style.display="block";
+  document.getElementById("overlay").style.display="block";
+  v.muted=true;
+  v.play();
+  m.volume=0.65;
+  m.play();
+  next(2);
+  roses();
+}
+
+/* Page switch */
+function next(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("p"+n).classList.add("active");
+  if(n===3) document.getElementById("photo").style.display="block";
+}
+
+/* Roses */
+function roses(){
+  setInterval(()=>{
+    const r=document.createElement("div");
+    r.className="rose";
+    r.innerHTML="🌹";
+    r.style.left=Math.random()*100+"vw";
+    r.style.fontSize=16+Math.random()*22+"px";
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(),7000);
+  },450);
+}
+
+/* YES */
+function yes(){
+  document.getElementById("fireworks").style.display="block";
+  setTimeout(()=>{
+    window.open(
+      "https://wa.me/?text=Yes%20Harish%20🌹%20I%20choose%20you%20confidently,%20today%20and%20always.",
+      "_blank"
+    );
+  },2000);
+}
+</script>
+
+</body>
+</html>
